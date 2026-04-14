@@ -1,0 +1,70 @@
+============================================================
+INSTRUÇÕES PARA RODAR E TESTAR O PROJETO (FASTAPI + DOCKER)
+============================================================
+
+1. COMO RODAR O PROJETO
+-----------------------
+Certifique-se de que o Docker Desktop esteja aberto e funcionando. 
+No terminal, na raiz do projeto, execute:
+
+docker-compose up --build
+
+------------------------------------------------------------
+
+2. ONDE TESTAR (INTERAÇÃO VISUAL)
+---------------------------------
+Após o container subir, abra o navegador em:
+
+http://localhost:8000/docs
+
+Lá você terá o Swagger UI para testar todos os endpoints.
+
+------------------------------------------------------------
+
+3. ROTEIRO DE TESTES SUGERIDO
+------------------------------
+
+PASSO A: Verificar Professores Pré-Cadastrados
+- No Swagger, abra: GET /professores
+- Clique em "Try it out" e depois em "Execute".
+- Você deve ver os professores com ID 1 e 2.
+
+PASSO B: Cadastrar um Aluno
+- No Swagger, abra: POST /alunos
+- Clique em "Try it out".
+- Altere o corpo para algo como:
+  {
+    "nome_completo": "Seu Nome Aqui",
+    "cpf": "123.456.789-00"
+  }
+- "Execute" e anote o "id" retornado (provavelmente 1).
+
+PASSO C: Criar uma Aula
+- No Swagger, abra: POST /aulas
+- Clique em "Try it out".
+- Use o corpo (vinculando ao professor ID 1):
+  {
+    "data": "2024-04-14",
+    "professor_id": 1
+  }
+- "Execute" e anote o "id" da aula (provavelmente 1).
+
+PASSO D: Registrar Presença do Aluno na Aula
+- No Swagger, abra: PUT /aulas/{aula_id}
+- Em "aula_id" coloque: 1
+- No corpo (request body), envie o ID do aluno na lista de presencas:
+  {
+    "data": "2024-04-14",
+    "professor_id": 1,
+    "id": 1,
+    "presencas": [1]
+  }
+- "Execute". A aula agora deve listar o aluno com ID 1 presente!
+
+------------------------------------------------------------
+4. COMO PARAR
+--------------
+No terminal, pressione Ctrl+C ou execute:
+
+docker-compose down
+============================================================

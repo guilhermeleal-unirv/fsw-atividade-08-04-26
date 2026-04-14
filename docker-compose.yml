@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: fastapi-gestao-aulas
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    # Mantém o container rodando no modo dev (reload on changes) no ambiente local se preferível
+    # command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
